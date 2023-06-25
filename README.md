@@ -1,3 +1,55 @@
+# GDP Data Visualization: Unveiling Global Economic Insights
+
+![Project Banner](project_banner.png)
+
+## Introduction
+Welcome to the GDP Data Visualization project! This project aims to explore and visualize the relationships between various variables and a country's Gross Domestic Product (GDP) per capita. By leveraging data analysis techniques and interactive visualizations, we uncover patterns, correlations, and key determinants of economic prosperity.
+
+**Author**: Calvin Baraka
+
+**LinkedIn**: [Calvin Baraka]([https://www.linkedin.com/in/calvinbaraka](https://www.linkedin.com/in/calvin-baraka-a8a335111/)/)
+
+**[Final Project Blog Article](https://medium.com/@calvinbarakah/gdp-data-visualization-unveiling-global-economic-insights-e695d81625ec)**
+
+**Deployed Site**: [Link to Deployed Site](https://your-project-site.com)
+
+## Installation
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/your-repository.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd your-repository
+   ```
+3. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+## Usage
+1. Run the main application file:
+   ```
+   python app.py
+   ```
+2. Open your web browser and visit the following URL:
+   ```
+   http://localhost:8050
+   ```
+3. Explore the interactive visualizations and gain insights into global economic data.
+
+## Contributing
+We welcome contributions to enhance the GDP Data Visualization project. To contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and enhancements.
+4. Commit and push your changes.
+5. Create a pull request.
+
+## Related Projects
+- [Gap Miner](https://www.gapminder.org/tools/)
+
 Variable Names and Measurement Values:
 1.	Country: This variable represents the name of the country. The measurement value would be the country's name, such as "United States," "Germany," or "China."
 2.	Region: This variable represents the geographic region to which the country belongs. The measurement value would be the name of the region, such as "North America," "Europe," or "Asia."
@@ -73,3 +125,7 @@ To represent variables in map form, you can consider using interactive maps with
 •	Literacy rate: Create a choropleth map illustrating literacy rates across countries. Users can use a dropdown menu or slider to explore literacy rates for specific years or regions.
 •	Environmental factors: Develop thematic maps showing environmental factors such as carbon emissions or renewable energy usage. Users can select specific variables from a dropdown menu or slider to visualize the data.
 By incorporating interactive features like dropdown menus or sliders, users can dynamically explore the data and observe spatial patterns and trends across different variables.
+
+
+## Licensing
+This project is licensed under the [MIT License](LICENSE). Feel free to use and modify the code as per the terms of the license.
