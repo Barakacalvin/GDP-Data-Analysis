@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Analysis and Visualization</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
+  <script src="https://cdn.plot.ly/dash-1.20.0.min.js"></script>
+</head>
+<body>
+  <h1>Data Analysis and Visualization</h1>
+
+  <!-- Descriptive Statistics -->
+  <h2>Descriptive Statistics</h2>
+
+  <select id="stats-dropdown" style="width: 200px;">
+    <option value="mean" selected>Mean</option>
+    <option value="median">Median</option>
+    <option value="std">Standard Deviation</option>
+  </select>
+
+  <table id="descriptive-stats-table"></table>
+
+  <!-- Bivariate Analysis -->
+  <h2>Bivariate Analysis</h2>
+
+  <div id="bivariate-graph"></div>
+  <p id="correlation"></p>
+
+  <!-- Cluster Analysis -->
+  <h2>Cluster Analysis</h2>
+
+  <p>Select variables for cluster analysis:</p>
+  <select id="cluster-variable-dropdown">
+    <option value="Climate">Climate</option>
+    <option value="Pop. Density (per sq. mi.)">Population Density</option>
+    <option value="Coastline (coast/area ratio)">Coastline Ratio</option>
+  </select>
+
+  <div id="cluster-graph"></div>
+
+  <!-- Factor Analysis -->
+  <h2>Factor Analysis</h2>
+
+  <p>Select variables for factor analysis:</p>
+  <select id="factor-variable-dropdown">
+    <option value="GDP ($ per capita)">GDP per Capita</option>
+    <option value="Literacy (%)">Literacy Rate</option>
+    <option value="Phones (per 1000)">Phones per 1000</option>
+    <option value="Arable (%)">Arable Land</option>
+    <option value="Service">Service Sector</option>
+  </select>
+
+  <div id="factor-graph"></div>
+
+  <!-- World Map -->
+  <h2>World Map</h2>
+
+  <div id="world-map"></div>
+
+  <script>
+    // Load the dataset
+    const df = `Paste your dataset here`; // Replace with your dataset
+
+    // Data Analysis
+    // Descriptive Statistics
+    const df_stats = df.describe();
+
+    // Bivariate Analysis
+    const correlation = df['GDP ($ per capita)'].corr(df['Literacy (%)']);
+    const regression = new SimpleLinearRegression(df['Literacy (%)'], df['GDP ($ per capita)']);
+
+    // Cluster Analysis
+    const cluster_df = df[['Climate', 'Pop. Density (per sq. mi.)', 'Coastline (coast/area ratio)']];
+
+    // Factor Analysis
+    const factor_analysis_df = df[['GDP ($ per capita)', 'Literacy (%)', 'Phones (per 1000)', 'Arable (%)', 'Service']];
+
+    // Update Descriptive Statistics Table
+    function updateDescriptiveStatsTable(selectedStat) {
+      let tableData;
+      if (selectedStat === 'mean') {
+        tableData = df_stats.loc['mean'].to_dict();
+      } else if (selectedStat === 'median') {
+        tableData = df_stats.loc['50%'].to_dict();
+      } else if (selectedStat === 'std') {
+        tableData = df_stats.loc['std'].to_dict();
+      }
+
+      let tableHtml = '';
+      for (const column in tableData) {
+        tableHtml += `<tr><td>${column}</td><td>${tableData[column]}</td></tr>`;
+      }
+      document.getElementById('descriptive-stats-table').innerHTML = tableHtml;
+    }
+
+    // Update Bivariate Analysis Graph
+    function updateBivariateGraph() {
+      const trace = {
+        x: df['GDP ($ per capita)'],
+        y: df['Literacy (%)'],
+        mode: 'markers',
+        type: 'scatter',
+        marker: {
+          size: 8,
+          color: 'blue',
+          opacity: 0.5,
+        },
+      };
+
+      const regressionLine = {
+        x: [Math.min(...df['GDP ($ per capita)']), Math.max(...df['GDP ($ per capita)'])],
+        y: [
+          regression.predict(Math.min(...df['GDP ($ per capita)'])),
+          regression.predict(Math.max(...df['GDP ($ per capita)'])),
+        ],
+        mode: 'lines',
+        type: 'scatter',
+        line: {
+          color: 'red',
+          width: 2,
+        },
+      };
+
+      const layout = {
+        title: 'GDP vs. Literacy',
+        xaxis: {
+          title: 'GDP ($ per capita)',
+        },
+        yaxis: {
+          title: 'Literacy (%)',
+        },
+      };
+
+      Plotly.newPlot('bivariate-graph', [trace, regressionLine], layout);
+      document.getElementById('correlation').innerText = `Correlation: ${correlation.toFixed(2)}`;
+    }
+
+    // Update Cluster Analysis Graph
+    function updateClusterGraph(selectedVariable) {
+      const variableData = cluster_df[selectedVariable];
+      const data = [
+        {
+          x: cluster_df['Climate'],
+          y: variableData,
+          mode: 'markers',
+          type: 'scatter',
+          marker: {
+            size: 8,
+            color: 'blue',
+            opacity: 0.5,
+          },
+        },
+      ];
+
+      const layout = {
+        title: `Cluster Analysis: ${selectedVariable}`,
+        xaxis: {
+          title: 'Climate',
+        },
+        yaxis: {
+          title: selectedVariable,
+        },
+      };
+
+      Plotly.newPlot('cluster-graph', data, layout);
+    }
+
+    // Update Factor Analysis Graph
+    function updateFactorGraph(selectedVariable) {
+      const variableData = factor_analysis_df[selectedVariable];
+      const data = [
+        {
+          x: factor_analysis_df['GDP ($ per capita)'],
+          y: variableData,
+          mode: 'markers',
+          type: 'scatter',
+          marker: {
+            size: 8,
+            color: 'blue',
+            opacity: 0.5,
+          },
+        },
+      ];
+
+      const layout = {
+        title: `Factor Analysis: ${selectedVariable}`,
+        xaxis: {
+          title: 'GDP ($ per capita)',
+        },
+        yaxis: {
+          title: selectedVariable,
+        },
+      };
+
+      Plotly.newPlot('factor-graph', data, layout);
+    }
+
+    // Update World Map
+    function updateWorldMap() {
+      const data = [
+        {
+          type: 'choropleth',
+          locations: df['Country'],
+          locationmode: 'country names',
+          z: df['GDP ($ per capita)'],
+          colorscale: 'Viridis',
+          autocolorscale: false,
+          reversescale: true,
+          marker: {
+            line: {
+              color: 'rgb(180,180,180)',
+              width: 0.5,
+            },
+          },
+        },
+      ];
+
+      const layout = {
+        title: 'World GDP Map',
+        geo: {
+          showframe: false,
+          showcoastlines: false,
+          projection: {
+            type: 'mercator',
+          },
+        },
+      };
+
+      Plotly.newPlot('world-map', data, layout);
+    }
+
+    // Event listeners
+    document.getElementById('stats-dropdown').addEventListener('change', (event) => {
+      const selectedStat = event.target.value;
+      updateDescriptiveStatsTable(selectedStat);
+    });
+
+    document.getElementById('cluster-variable-dropdown').addEventListener('change', (event) => {
+      const selectedVariable = event.target.value;
+      updateClusterGraph(selectedVariable);
+    });
+
+    document.getElementById('factor-variable-dropdown').addEventListener('change', (event) => {
+      const selectedVariable = event.target.value;
+      updateFactorGraph(selectedVariable);
+    });
+
+    // Initial updates
+    updateDescriptiveStatsTable('mean');
+    updateBivariateGraph();
+    updateClusterGraph('Climate');
+    updateFactorGraph('GDP ($ per capita)');
+    updateWorldMap();
+  </script>
+</body>
+</html>
