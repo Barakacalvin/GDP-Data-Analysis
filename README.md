@@ -1,7 +1,7 @@
 <h1 align="center">GDP Data Visualization: Unveiling Global Economic Insights</h1>
 
 <p align="center">
-  <img src="project_banner.png" alt="Project Banner">
+  <img src="baraka_banner.png" alt="Project Banner">
 </p>
 
 ## Introduction
