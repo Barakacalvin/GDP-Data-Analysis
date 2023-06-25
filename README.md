@@ -1,23 +1,22 @@
-# GDP Data Visualization: Unveiling Global Economic Insights
+<h1 align="center">GDP Data Visualization: Unveiling Global Economic Insights</h1>
 
-![Project Banner](project_banner.png)
+<p align="center">
+  <img src="project_banner.png" alt="Project Banner">
+</p>
 
 ## Introduction
 Welcome to the GDP Data Visualization project! This project aims to explore and visualize the relationships between various variables and a country's Gross Domestic Product (GDP) per capita. By leveraging data analysis techniques and interactive visualizations, we uncover patterns, correlations, and key determinants of economic prosperity.
 
-**Author**: Calvin Baraka
-
-**LinkedIn**: [Calvin Baraka]([https://www.linkedin.com/in/calvinbaraka](https://www.linkedin.com/in/calvin-baraka-a8a335111/)/)
-
-**[Final Project Blog Article](https://medium.com/@calvinbarakah/gdp-data-visualization-unveiling-global-economic-insights-e695d81625ec)**
-
+**Author**: Calvin Baraka<br>
+**LinkedIn**: <a href="https://www.linkedin.com/in/calvinbaraka">Calvin Baraka</a><br>
+**[Final Project Blog Article](https://medium.com/@calvinbarakah/gdp-data-visualization-unveiling-global-economic-insights-e695d81625ec)**<br>
 **Deployed Site**: [Link to Deployed Site](https://your-project-site.com)
 
 ## Installation
 1. Clone the repository:
-   ```
-   git clone https://github.com/your-username/your-repository.git
-   ```
+git clone https://github.com/your-username/your-repository.git
+
+
 2. Navigate to the project directory:
    ```
    cd your-repository
